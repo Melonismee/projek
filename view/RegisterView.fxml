@@ -18,7 +18,7 @@
                 <Font name="System Bold" size="24.0" />
             </font>
         </Label>
-        <Label text="Buat akun baru untuk mulai menghitung" textFill="#757575" />
+        <Label text="Buat akun baru" textFill="#757575" />
         
         <TextField fx:id="txtUsername" promptText="Username" />
         <TextField fx:id="txtEmail" promptText="Email" />

@@ -18,13 +18,13 @@
                 <Font name="System Bold" size="24.0" />
             </font>
         </Label>
-        <Label text="Silakan Login untuk melanjutkan" textFill="#757575" />
+        <Label text="Silakan Login Terlebih Dahulu" textFill="#757575" />
         
         <TextField fx:id="txtUsername" promptText="Username" />
         <PasswordField fx:id="txtPassword" promptText="Password" />
         
         <Button mnemonicParsing="false" onAction="#handleLogin" prefWidth="200.0" text="LOGIN" style="-fx-background-color: #2196F3; -fx-text-fill: white;" />
         
-        <Button mnemonicParsing="false" onAction="#handleGoToRegister" style="-fx-background-color: transparent; -fx-text-fill: #2196F3;" text="Belum punya akun? Daftar disini" underline="true" />
+        <Button mnemonicParsing="false" onAction="#handleGoToRegister" style="-fx-background-color: transparent; -fx-text-fill: #2196F3;" text="Daftar Akun disini" underline="true" />
     </children>
 </VBox>

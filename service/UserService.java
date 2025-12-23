@@ -7,61 +7,46 @@ public class UserService {
 
     private UserDAO userDAO = new UserDAO();
 
-    /**
-     * REGISTER: Mengembalikan true jika berhasil, false jika gagal.
-     */
-    public boolean register(String username, String email, String password) {
+    public String validateAndRegister(String username, String email, String password) {
+        if (isAnyEmpty(username, email, password)) {
+            return "Semua kolom wajib diisi!";
+        }
+
+        if (!email.contains("@")) {
+            return "Format email salah! Harus mengandung '@'.";
+        }
+
+        if (password.length() < 6) {
+            return "Password terlalu pendek! Minimal 6 karakter.";
+        }
+
+        if (userDAO.findByUsername(username) != null) {
+            return "Username '" + username + "' sudah terpakai.";
+        }
+
         try {
-            // 1. Validasi Input Kosong
-            if (username == null || username.trim().isEmpty() ||
-                email == null || email.trim().isEmpty() ||
-                password == null || password.trim().isEmpty()) {
-                return false;
-            }
-
-            // 2. Validasi Password Minimal 6 Karakter
-            if (password.length() < 6) {
-                System.out.println("Password terlalu pendek");
-                return false;
-            }
-
-            // 3. Cek apakah username sudah ada (Cegah Duplikasi)
-            if (userDAO.findByUsername(username) != null) {
-                System.out.println("Username sudah terpakai");
-                return false;
-            }
-
-            // 4. Simpan User Baru
             User newUser = new User(username, email, password);
-            userDAO.insert(newUser); // Menggunakan method 'insert'
-            
-            return true;
-
+            userDAO.insert(newUser);
+            return null; 
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return "Terjadi kesalahan database.";
         }
     }
 
-    /**
-     * LOGIN: Mengembalikan object User jika sukses, null jika gagal.
-     */
-    public User login(String username, String password) {
-        try {
-            if (username == null || password == null) return null;
-
-            // Ambil data user dari DAO
-            User user = userDAO.findByUsername(username);
-
-            // Cek apakah user ada DAN password cocok
-            if (user != null && user.getPassword().equals(password)) {
-                return user; // Login Sukses
-            }
-            
-        } catch (Exception e) {
-            e.printStackTrace();
+    private boolean isAnyEmpty(String... texts) {
+        for (String t : texts) {
+            if (t == null || t.trim().isEmpty()) return true;
         }
-        
-        return null; // Login Gagal
+        return false;
+    }
+    
+    public User login(String username, String password) {
+        if (username == null || password == null) return null;
+        User user = userDAO.findByUsername(username);
+        if (user != null && user.getPassword().equals(password)) {
+            return user;
+        }
+        return null;
     }
 }

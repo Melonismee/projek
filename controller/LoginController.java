@@ -4,9 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.User;
 import service.UserService;
@@ -25,11 +23,9 @@ public class LoginController {
         String user = txtUsername.getText();
         String pass = txtPassword.getText();
 
-        // Panggil Service untuk Login
         User loggedInUser = userService.login(user, pass);
 
         if (loggedInUser != null) {
-            // Jika sukses, pindah ke layar Utama
             goToMainScreen(loggedInUser);
         } else {
             showAlert(Alert.AlertType.ERROR, "Login Gagal", "Username atau Password salah.");
@@ -52,7 +48,6 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/MainView.fxml"));
             Parent root = loader.load();
 
-            // KIRIM DATA USER KE MAIN CONTROLLER
             MainController controller = loader.getController();
             controller.setSession(user);
 

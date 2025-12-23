@@ -4,9 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import service.UserService;
 
@@ -26,15 +24,13 @@ public class RegisterController {
         String email = txtEmail.getText();
         String pass = txtPassword.getText();
 
-        // Panggil Service
-        boolean isSuccess = userService.register(user, email, pass);
+        String errorMessage = userService.validateAndRegister(user, email, pass);
 
-        if (isSuccess) {
+        if (errorMessage == null) {
             showAlert(Alert.AlertType.INFORMATION, "Sukses", "Akun berhasil dibuat! Silakan login.");
             handleBackToLogin();
         } else {
-            // Pesan error detailnya sudah di-handle/print di Service (atau bisa disesuaikan)
-            showAlert(Alert.AlertType.ERROR, "Gagal", "Gagal mendaftar. Cek input atau username mungkin sudah ada.");
+            showAlert(Alert.AlertType.WARNING, "Validasi Gagal", errorMessage);
         }
     }
 
