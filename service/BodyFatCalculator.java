@@ -6,6 +6,7 @@ import model.BodyFatResult;
 public abstract class BodyFatCalculator implements DietAnalyzer {
 
     public BodyFatResult analyze(Measurement m) {
+        // Balik ke cara lama: Buat object kosong
         BodyFatResult result = new BodyFatResult();
         
         double bf = calculateBodyFat(m);

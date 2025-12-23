@@ -6,13 +6,19 @@ public class User {
 	private String email;
 	private String password;
 
-	public User() {}
-
 	public User(String username, String email, String password) {
-		this.username = username;
-		this.email = email;
-		this.password = password;
-	}
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    // Constructor 2: Untuk Login/Database (Sudah ada ID)
+    public User(int userId, String username, String email, String password) {
+        this.userId = userId;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 	
 	public int getUserId() {
 		return userId;

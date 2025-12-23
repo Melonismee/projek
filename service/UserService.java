@@ -8,39 +8,25 @@ public class UserService {
     private UserDAO userDAO = new UserDAO();
 
     public String validateAndRegister(String username, String email, String password) {
-        if (isAnyEmpty(username, email, password)) {
+        if (username == null || username.isEmpty() || email == null || email.isEmpty() || password == null || password.isEmpty()) {
             return "Semua kolom wajib diisi!";
         }
-
+        
+        // Validasi Email (Sesuai request Anda sebelumnya)
         if (!email.contains("@")) {
-            return "Format email salah! Harus mengandung '@'.";
+            return "Format email salah (harus ada '@')";
         }
+        
+        if (password.length() < 6) return "Password minimal 6 karakter";
+        if (userDAO.findByUsername(username) != null) return "Username sudah terpakai";
 
-        if (password.length() < 6) {
-            return "Password terlalu pendek! Minimal 6 karakter.";
-        }
-
-        if (userDAO.findByUsername(username) != null) {
-            return "Username '" + username + "' sudah terpakai.";
-        }
-
-        try {
-            User newUser = new User(username, email, password);
-            userDAO.insert(newUser);
-            return null; 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Terjadi kesalahan database.";
-        }
+        // MENGGUNAKAN CONSTRUCTOR USER (Khusus User pakai constructor)
+        User newUser = new User(username, email, password);
+        userDAO.insert(newUser);
+        
+        return null;
     }
 
-    private boolean isAnyEmpty(String... texts) {
-        for (String t : texts) {
-            if (t == null || t.trim().isEmpty()) return true;
-        }
-        return false;
-    }
-    
     public User login(String username, String password) {
         if (username == null || password == null) return null;
         User user = userDAO.findByUsername(username);

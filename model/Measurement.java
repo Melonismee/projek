@@ -26,8 +26,11 @@ public class Measurement {
 		this.date = date;
 	}
 	
-	public double getBodyFatDisplay() {
-		return (result != null) ? result.getBodyFatPercentage() : 0.0;
+	public String getBodyFatDisplay() {
+	    if (result != null) {
+	        return String.format("%.2f", result.getBodyFatPercentage());
+	    }
+	    return "0.00";
 	}
 	
 	public String getCategoryDisplay() {

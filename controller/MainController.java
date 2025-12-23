@@ -1,7 +1,6 @@
 package controller;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,27 +17,16 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class MainController {
+
     @FXML private ComboBox<String> comboGender;
-    @FXML private TextField txtHeight;
-    @FXML private TextField txtWeight;
-    @FXML private TextField txtWaist;
-    @FXML private TextField txtNeck;
-    @FXML private TextField txtHip;
-
-    @FXML private Label lblResult;      
-    @FXML private Label lblCategory;    
-    @FXML private Label lblAvg;         
-
+    @FXML private TextField txtHeight, txtWeight, txtWaist, txtNeck, txtHip;
+    @FXML private Label lblResult, lblCategory, lblAvg;
     @FXML private TableView<Measurement> tableHistory;
-    @FXML private TableColumn<Measurement, String> colDate;
-    @FXML private TableColumn<Measurement, String> colGender;
-    @FXML private TableColumn<Measurement, Double> colResult;
-    @FXML private TableColumn<Measurement, String> colCategory;
-    @FXML private TableColumn<Measurement, String> colDiet;
+    @FXML private TableColumn<Measurement, String> colDate, colGender, colCategory, colDiet;
+    @FXML private TableColumn<Measurement, String> colResult;
 
     private BodyFatService service = new BodyFatService();
     private User currentUser;
-    private ObservableList<Measurement> listData;
 
     @FXML
     public void initialize() {
@@ -46,7 +34,6 @@ public class MainController {
         
         colDate.setCellValueFactory(new PropertyValueFactory<>("date")); 
         colGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
-        
         colResult.setCellValueFactory(new PropertyValueFactory<>("bodyFatDisplay"));
         colCategory.setCellValueFactory(new PropertyValueFactory<>("categoryDisplay"));
         colDiet.setCellValueFactory(new PropertyValueFactory<>("dietDisplay"));
@@ -61,6 +48,8 @@ public class MainController {
     public void handleCalculate() {
         try {
             String gender = comboGender.getValue();
+            if (gender == null) { showAlert(Alert.AlertType.WARNING, "Peringatan", "Pilih gender!"); return; }
+
             double height = Double.parseDouble(txtHeight.getText());
             double weight = Double.parseDouble(txtWeight.getText());
             double waist = Double.parseDouble(txtWaist.getText());
@@ -69,43 +58,38 @@ public class MainController {
 
             Measurement m = new Measurement();
             m.setUserId(currentUser.getUserId());
-            m.setDate(LocalDate.now());
             m.setGender(gender);
             m.setHeight(height);
             m.setWeight(weight);
             m.setWaist(waist);
             m.setNeck(neck);
             m.setHip(hip);
+            m.setDate(LocalDate.now());
 
             boolean success = service.calculateAndSave(m);
 
             if (success) {
                 lblResult.setText(String.format("%.1f %%", m.getResult().getBodyFatPercentage()));
                 lblCategory.setText(m.getResult().getCategory());
-                
                 loadHistory();
-                
-                showAlert(Alert.AlertType.INFORMATION, "Sukses", "Perhitungan berhasil disimpan!");
+                showAlert(Alert.AlertType.INFORMATION, "Sukses", "Data disimpan!");
             } else {
-                showAlert(Alert.AlertType.WARNING, "Gagal", "Validasi gagal. Cek input Anda (harus positif & logis).");
+                showAlert(Alert.AlertType.WARNING, "Gagal", "Cek input Anda (Angka harus positif & logis).");
             }
 
         } catch (NumberFormatException e) {
-            showAlert(Alert.AlertType.ERROR, "Input Error", "Mohon masukkan angka yang valid.");
-        } catch (Exception e) {
-            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Input Error", "Masukkan angka yang valid.");
         }
     }
 
     @FXML
     public void handleDelete() {
         Measurement selected = tableHistory.getSelectionModel().getSelectedItem();
-        
         if (selected != null) {
             service.delete(selected.getMeasurementId());
-            loadHistory(); 
+            loadHistory();
         } else {
-            showAlert(Alert.AlertType.WARNING, "Pilih Data", "Silakan pilih data di tabel untuk dihapus.");
+            showAlert(Alert.AlertType.WARNING, "Pilih Data", "Pilih data untuk dihapus.");
         }
     }
 
@@ -115,19 +99,14 @@ public class MainController {
             Parent root = FXMLLoader.load(getClass().getResource("/view/LoginView.fxml"));
             Stage stage = (Stage) lblResult.getScene().getWindow();
             stage.setScene(new Scene(root));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
     private void loadHistory() {
         if (currentUser == null) return;
-
         List<Measurement> history = service.getHistory(currentUser.getUserId());
+        tableHistory.setItems(FXCollections.observableArrayList(history));
         
-        listData = FXCollections.observableArrayList(history);
-        tableHistory.setItems(listData);
-
         double avg = service.getAverageBodyFat(currentUser.getUserId());
         lblAvg.setText(String.format("Rata-rata: %.1f %%", avg));
     }
