@@ -5,25 +5,39 @@ public class Measurement {
 	private int measurementId;
 	private int userId;
 	private String gender;
-	private double heightCm;
-	private double weightKg;
-	private double waistCm;
-	private double neckCm;
-	private double hipCm;
-	private LocalDate measurementDate;
+	private double height;
+	private double weight;
+	private double waist;
+	private double neck;
+	private double hip;
+	private BodyFatResult result;
+	private LocalDate date;
 	
 	public Measurement() {}
 
-	public Measurement(int userId, String gender, double heightCm, double weightKg, double waistCm, double neckCm, double hipCm, LocalDate measurementDate) {
+	public Measurement(int userId, String gender, double height, double weight, double waist, double neck, double hip, LocalDate date) {
 		this.userId = userId;
 		this.gender = gender;
-		this.heightCm = heightCm;
-		this.weightKg = weightKg;
-		this.waistCm = waistCm;
-		this.neckCm = neckCm;
-		this.hipCm = hipCm;
-		this.measurementDate = measurementDate;
+		this.height = height;
+		this.weight = weight;
+		this.waist = waist;
+		this.neck = neck;
+		this.hip = hip;
+		this.date = date;
 	}
+	
+	public double getBodyFatDisplay() {
+		return (result != null) ? result.getBodyFatPercentage() : 0.0;
+	}
+	
+	public String getCategoryDisplay() {
+        return (result != null) ? result.getCategory() : "-";
+    }
+
+    public String getDietDisplay() {
+        if (result == null) return "-";
+        return result.getDietRecommenString();
+    }
 	
 	public int getMeasurementId() {
 		return measurementId;
@@ -49,51 +63,59 @@ public class Measurement {
 		this.gender = gender;
 	}
 	
-	public double getHeightCm() {
-		return heightCm;
+	public double getHeight() {
+		return height;
 	}
 	
-	public void setHeightCm(double heightCm) {
-		this.heightCm = heightCm;
+	public void setHeight(double height) {
+		this.height = height;
 	}
 	
-	public double getWeightKg() {
-		return weightKg;
+	public double getWeight() {
+		return weight;
 	}
 	
-	public void setWeightKg(double weightKg) {
-		this.weightKg = weightKg;
+	public void setWeight(double weight) {
+		this.weight = weight;
 	}
 	
-	public double getWaistCm() {
-		return waistCm;
+	public double getWaist() {
+		return waist;
 	}
 	
-	public void setWaistCm(double waistCm) {
-		this.waistCm = waistCm;
+	public void setWaist(double waist) {
+		this.waist = waist;
 	}
 	
-	public double getNeckCm() {
-		return neckCm;
+	public double getNeck() {
+		return neck;
 	}
 	
-	public void setNeckCm(double neckCm) {
-		this.neckCm = neckCm;
+	public void setNeck(double neck) {
+		this.neck = neck;
 	}
 	
-	public double getHipCm() {
-		return hipCm;
+	public double getHip() {
+		return hip;
 	}
 	
-	public void setHipCm(double hipCm) {
-		this.hipCm = hipCm;
+	public void setHip(double hip) {
+		this.hip = hip;
 	}
 	
-	public LocalDate getMeasurementDate() {
-		return measurementDate;
+	public LocalDate getDate() {
+		return date;
 	}
 	
-	public void setMeasurementDate(LocalDate measurementDate) {
-		this.measurementDate = measurementDate;
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+	
+	public BodyFatResult getResult() {
+		return result;
+	}
+	
+	public void setResult(BodyFatResult result) {
+		this.result = result;
 	}
 }

@@ -58,4 +58,8 @@ public class BodyFatResult {
     public void setFatPercentage(double fatPercentage) {
         this.fatPercentage = fatPercentage;
     }
+    
+    public String getDietRecommenString() {
+    	return String.format("Carbs: %.0f%%, Protein: %.0f%%, Fat: %.0f%%", carbPercentage, proteinPercentage, fatPercentage);
+    }
 }

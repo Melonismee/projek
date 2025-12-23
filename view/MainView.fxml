@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.35" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+   <items>
+      <AnchorPane minHeight="0.0" minWidth="0.0">
+         <children>
+            <VBox spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+               <children>
+                  <Label text="Input Data Fisik">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label text="Masukkan ukuran dalam cm dan kg" textFill="#757575" />
+                  
+                  <Label text="Gender:" />
+                  <ComboBox fx:id="comboGender" prefWidth="300.0" promptText="Pilih Gender" />
+                  
+                  <Label text="Tinggi Badan (cm):" />
+                  <TextField fx:id="txtHeight" promptText="Contoh: 170" />
+                  
+                  <Label text="Berat Badan (kg):" />
+                  <TextField fx:id="txtWeight" promptText="Contoh: 65" />
+                  
+                  <Label text="Lingkar Pinggang (cm):" />
+                  <TextField fx:id="txtWaist" promptText="Di pusar" />
+                  
+                  <Label text="Lingkar Leher (cm):" />
+                  <TextField fx:id="txtNeck" promptText="Di bawah jakun" />
+                  
+                  <Label text="Lingkar Pinggul (cm):" />
+                  <TextField fx:id="txtHip" promptText="Khusus Wanita (Pria isi 0)" />
+                  
+                  <Button mnemonicParsing="false" onAction="#handleCalculate" prefWidth="300.0" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold;" text="HITUNG BODY FAT">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      
+      <AnchorPane minHeight="0.0" minWidth="0.0">
+         <children>
+            <VBox spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+               <children>
+                  <HBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-background-color: #E3F2FD; -fx-background-radius: 5;">
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
+                     <children>
+                        <VBox>
+                           <children>
+                              <Label text="Hasil Terakhir:">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblResult" text="0.0 %" textFill="#2196f3">
+                                 <font>
+                                    <Font name="System Bold" size="36.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox>
+                           <children>
+                              <Label text="Kategori:">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblCategory" text="-" textFill="#424242">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="Rata-rata User:">
+                                    <font><Font size="12.0"/></font>
+                                </Label>
+                                <Label fx:id="lblAvg" text="0.0 %">
+                                    <font><Font name="System Bold" size="18.0"/></font>
+                                </Label>
+                            </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  
+                  <Label text="Riwayat Pengukuran:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  
+                  <TableView fx:id="tableHistory" VBox.vgrow="ALWAYS">
+                    <columns>
+                      <TableColumn fx:id="colDate" prefWidth="100.0" text="Tanggal" />
+                      <TableColumn fx:id="colGender" prefWidth="70.0" text="Gender" />
+                      <TableColumn fx:id="colResult" prefWidth="80.0" text="Body Fat" />
+                      <TableColumn fx:id="colCategory" prefWidth="100.0" text="Kategori" />
+                      <TableColumn fx:id="colDiet" prefWidth="200.0" text="Saran Diet (Nutrisi)" />
+                    </columns>
+                  </TableView>
+                  
+                  <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#handleDelete" style="-fx-background-color: #F44336; -fx-text-fill: white;" text="Hapus Data Terpilih" />
+                        <Button mnemonicParsing="false" onAction="#handleLogout" text="Logout" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </items>
+</SplitPane>
