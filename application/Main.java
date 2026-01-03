@@ -11,16 +11,12 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            // Memuat halaman pertama yaitu LoginView
             Parent root = FXMLLoader.load(getClass().getResource("/view/LoginView.fxml"));
             
             Scene scene = new Scene(root);
-            
-            // Pengaturan Judul Window
             primaryStage.setTitle("Aplikasi Kalkulator Body Fat - UAS");
             primaryStage.setScene(scene);
             
-            // Menampilkan Aplikasi
             primaryStage.show();
             
         } catch (Exception e) {

@@ -13,8 +13,7 @@ public class BodyFatService {
         try {
             if (record == null) return false;
             
-            if (record.getHeight() <= 0 || record.getWeight() <= 0 || 
-                record.getWaist() <= 0 || record.getNeck() <= 0) {
+            if (record.getHeight() <= 0 || record.getWeight() <= 0 || record.getWaist() <= 0 || record.getNeck() <= 0) {
                 System.out.println("Validasi Gagal: Ukuran tubuh harus positif.");
                 return false;
             }

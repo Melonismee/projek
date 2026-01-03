@@ -17,6 +17,13 @@ public class LoginController {
     @FXML private PasswordField txtPassword;
 
     private UserService userService = new UserService();
+    
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 
     @FXML
     public void handleLogin() {
@@ -60,10 +67,4 @@ public class LoginController {
         }
     }
 
-    private void showAlert(Alert.AlertType type, String title, String content) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
 }

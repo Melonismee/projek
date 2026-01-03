@@ -5,21 +5,6 @@ import model.BodyFatResult;
 
 public abstract class BodyFatCalculator implements DietAnalyzer {
 
-    public BodyFatResult analyze(Measurement m) {
-        // Balik ke cara lama: Buat object kosong
-        BodyFatResult result = new BodyFatResult();
-        
-        double bf = calculateBodyFat(m);
-        result.setBodyFatPercentage(bf);
-        
-        String cat = determineCategory(bf, m.getGender());
-        result.setCategory(cat);
-        
-        generateDietRecommendation(result);
-        
-        return result;
-    }
-
     protected abstract double calculateBodyFat(Measurement m);
 
     protected String determineCategory(double bf, String gender) {
@@ -40,5 +25,20 @@ public abstract class BodyFatCalculator implements DietAnalyzer {
         } else {
             result.setCarbPercentage(45); result.setProteinPercentage(30); result.setFatPercentage(25);
         }
+    }
+    
+
+    public BodyFatResult analyze(Measurement m) {
+        BodyFatResult result = new BodyFatResult();
+        
+        double bf = calculateBodyFat(m);
+        result.setBodyFatPercentage(bf);
+        
+        String cat = determineCategory(bf, m.getGender());
+        result.setCategory(cat);
+        
+        generateDietRecommendation(result);
+        
+        return result;
     }
 }

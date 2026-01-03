@@ -12,7 +12,6 @@ public class UserService {
             return "Semua kolom wajib diisi!";
         }
         
-        // Validasi Email (Sesuai request Anda sebelumnya)
         if (!email.contains("@")) {
             return "Format email salah (harus ada '@')";
         }
@@ -20,7 +19,6 @@ public class UserService {
         if (password.length() < 6) return "Password minimal 6 karakter";
         if (userDAO.findByUsername(username) != null) return "Username sudah terpakai";
 
-        // MENGGUNAKAN CONSTRUCTOR USER (Khusus User pakai constructor)
         User newUser = new User(username, email, password);
         userDAO.insert(newUser);
         

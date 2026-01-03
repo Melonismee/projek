@@ -12,7 +12,6 @@ public class User {
         this.password = password;
     }
 
-    // Constructor 2: Untuk Login/Database (Sudah ada ID)
     public User(int userId, String username, String email, String password) {
         this.userId = userId;
         this.username = username;

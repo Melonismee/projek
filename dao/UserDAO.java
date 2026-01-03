@@ -14,7 +14,9 @@ public class UserDAO {
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPassword());
             stmt.executeUpdate();
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { 
+        	e.printStackTrace(); 
+        	}
     }
 
     public User findByUsername(String username) {
@@ -24,7 +26,6 @@ public class UserDAO {
             stmt.setString(1, username);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                // PAKAI CONSTRUCTOR USER (Khusus ini tidak kosong)
                 return new User(
                     rs.getInt("user_id"),
                     rs.getString("username"),
@@ -32,7 +33,9 @@ public class UserDAO {
                     rs.getString("password")
                 );
             }
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { 
+        	e.printStackTrace(); 
+        	}
         return null;
     }
 }

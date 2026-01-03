@@ -27,6 +27,13 @@ public class MainController {
 
     private BodyFatService service = new BodyFatService();
     private User currentUser;
+    
+    private void showAlert(Alert.AlertType type, String title, String content) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
 
     @FXML
     public void initialize() {
@@ -111,10 +118,4 @@ public class MainController {
         lblAvg.setText(String.format("Rata-rata: %.1f %%", avg));
     }
 
-    private void showAlert(Alert.AlertType type, String title, String content) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
 }

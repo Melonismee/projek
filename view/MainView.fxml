@@ -28,7 +28,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label text="Masukkan ukuran dalam cm dan kg" textFill="#757575" />
+                  <Label text="Masukkan ukuran" textFill="#757575" />
                   
                   <Label text="Gender:" />
                   <ComboBox fx:id="comboGender" prefWidth="300.0" promptText="Pilih Gender" />
@@ -100,9 +100,6 @@
                         </VBox>
                         <VBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                             <children>
-                                <Label text="Rata-rata User:">
-                                    <font><Font size="12.0"/></font>
-                                </Label>
                                 <Label fx:id="lblAvg" text="0.0 %">
                                     <font><Font name="System Bold" size="18.0"/></font>
                                 </Label>
@@ -126,7 +123,7 @@
                       <TableColumn fx:id="colGender" prefWidth="70.0" text="Gender" />
                       <TableColumn fx:id="colResult" prefWidth="80.0" text="Body Fat" />
                       <TableColumn fx:id="colCategory" prefWidth="100.0" text="Kategori" />
-                      <TableColumn fx:id="colDiet" prefWidth="200.0" text="Saran Diet (Nutrisi)" />
+                      <TableColumn fx:id="colDiet" prefWidth="200.0" text="Saran Diet" />
                     </columns>
                   </TableView>
                   
